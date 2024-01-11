@@ -101,14 +101,14 @@
                    <img src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="User Avatar" class="w-8 h-8 rounded-full">
                  </div>
                  <div class="flex max-w-96 bg-pink-600 rounded-lg p-3 gap-3">
-                   <p class="text-white">Lu gimana bro</p>
+                   <p class="text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium sapiente sint perferendis fugit assumenda eligendi dolores quia aliquid? Sed quia fugit fuga. Deleniti, officia quo. Qui blanditiis repellendus odit id.</p>
                  </div>
                </div>
                
                <!-- Outgoing Message -->
                <div class="flex justify-end mb-4 cursor-pointer">
                  <div class="flex max-w-96 bg-indigo-500 text-white rounded-lg p-3 gap-3">
-                   <p>Gua Baiks Bro</p>
+                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptatum quo doloremque eaque consequuntur magnam unde debitis exercitationem amet, expedita error reiciendis similique ipsam delectus suscipit, alias rem quos odio.</p>
                  </div>
                  <div class="w-9 h-9 rounded-full flex items-center justify-center ml-2">
                    <img src="https://placehold.co/200x/b7a8ff/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato" alt="My Avatar" class="w-8 h-8 rounded-full">
@@ -169,8 +169,9 @@
             <!-- Chat Input -->
             <footer class="bg-gray-800 border-t border-gray-300 p-4 absolute bottom-0 w-3/4">
                 <div class="flex items-center">
-                    <input type="text" placeholder="Type a message..." class="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500">
-                    <button class="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">Send</button>
+                  <input type="text" placeholder="Type a message..." v-model="newMessage" @keydown.enter.prevent="sendMessage"
+                    class="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"/>  
+                  <button @click="sendMessage" class="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">Send</button>
                 </div>
             </footer>
         </div>
@@ -197,7 +198,8 @@ export default {
         { id: 13, name: "Client", avatar: "https://placehold.co/200x/ad922e/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato", lastMessage: "Pesan 13" },
       ],
       selectedContact: {},
-      searchTerm: ''
+      searchTerm: '',
+      newMessage: ''
     };
   },
   computed: {
@@ -211,7 +213,18 @@ export default {
     displayMessages(contact) {
       this.selectedContact = contact;
       this.selectedContact.messages = contact.messages;
-    }
+    }, 
+    sendMessage(){
+      if(this.newMessage.trim() === ''){
+        return;
+      }
+      this.selectedContact.messages.push({
+        content: this.newMessage,
+        isOutgoing: true,
+      });
+
+      this.messages = '';
+    } 
   }
 };
 </script>
